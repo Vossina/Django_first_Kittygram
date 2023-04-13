@@ -9,3 +9,7 @@ class Cat(models.Model):
     name = models.CharField(max_length=15)
     color = models.CharField(max_length=20)
     birth_year = models.IntegerField(null=True)
+
+
+def __str__(self):
+    return self.name
