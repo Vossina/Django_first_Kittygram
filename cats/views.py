@@ -1,9 +1,9 @@
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status, generics
-from .serializers import CatSerializer
-from .models import Cat
+from rest_framework import status, generics, viewsets
+from .serializers import CatSerializer, OwnerSerializer
+from .models import Cat, Owner
 
 # Create your views here.
 # @api_view(['POST','GET'])
@@ -45,11 +45,20 @@ from .models import Cat
     #         serializer.save()
     #         return Response(serializer.data, status=status.HTTP_201_CREATED) 
     #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-class CatList(generics.ListCreateAPIView):    
+# class CatList(generics.ListCreateAPIView):    
+#     queryset = Cat.objects.all()
+#     serializer_class = CatSerializer
+
+
+# class CatDetail(generics.RetrieveUpdateDestroyAPIView):    
+#     queryset = Cat.objects.all()
+#     serializer_class = CatSerializer
+
+class CatViewSet(viewsets.ModelViewSet):
     queryset = Cat.objects.all()
     serializer_class = CatSerializer
 
 
-class CatDetail(generics.RetrieveUpdateDestroyAPIView):    
-    queryset = Cat.objects.all()
-    serializer_class = CatSerializer
+class OwnerViewSet(viewsets.ModelViewSet):
+    queryset = Owner.objects.all()
+    serializer_class = OwnerSerializer

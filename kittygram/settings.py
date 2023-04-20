@@ -80,9 +80,9 @@ DATABASES = {
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'kittygram',
             'USER': 'postgres',
-            'PASSWORD': 'postgres',
+            'PASSWORD': '1111',
             'HOST': 'localhost',
-            'PORT': '5432',
+            'PORT': '5433',
         }
 }
 
