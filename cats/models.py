@@ -1,5 +1,11 @@
 from django.db import models
+from django.utils import timezone
 
+class Toy(models.Model):
+    name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.name
 
 
 class Achievement(models.Model):
@@ -23,13 +29,20 @@ class Cat(models.Model):
     name = models.CharField(max_length=15)
     color = models.CharField(max_length=20)
     birth_year = models.IntegerField(null=True)
+    created = models.DateTimeField('created', auto_now_add=True)
+    changed = models.DateTimeField(auto_now=True)
+    deleted = models.DateTimeField(null=True, default=None)
+    is_purebred = models.BooleanField(default=False)
     owner = models.ForeignKey(Owner, related_name='cats', on_delete=models.CASCADE)
     achievements = models.ManyToManyField(Achievement, through='AchievementCat')
-
-
+    toys = models.ManyToManyField(Toy, through='FavouriteToyCat')
 
     def __str__(self):
-        return self.name
+        return f'{self.name}, {self.color}, {self.toys}'
+    
+    def delete (self): 
+        self.deleted = timezone.now() 
+        self.save()
 
 # В этой модели будут связаны id котика и id его достижения
 class AchievementCat(models.Model):
@@ -38,4 +51,11 @@ class AchievementCat(models.Model):
 
     def __str__(self):
         return f'{self.achievement} {self.cat}'
-    
+
+
+class FavouriteToyCat(models.Model):
+    toy = models.ForeignKey(Toy, on_delete=models.CASCADE)
+    cat = models.ForeignKey(Cat, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.toy} {self.cat}'
