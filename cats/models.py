@@ -1,6 +1,14 @@
 from django.db import models
 from django.utils import timezone
 
+CHOICES = (
+        ('Gray', 'Серый'),
+        ('Black', 'Чёрный'),
+        ('White', 'Белый'),
+        ('Ginger', 'Рыжий'),
+        ('Mixed', 'Смешанный'),
+    )
+
 class Toy(models.Model):
     name = models.CharField(max_length=30)
 
@@ -36,6 +44,7 @@ class Cat(models.Model):
     owner = models.ForeignKey(Owner, related_name='cats', on_delete=models.CASCADE)
     achievements = models.ManyToManyField(Achievement, through='AchievementCat')
     toys = models.ManyToManyField(Toy, through='FavouriteToyCat')
+
 
     def __str__(self):
         return f'{self.name}, {self.color}, {self.toys}'
