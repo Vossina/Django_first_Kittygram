@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Cat
+from .models import Cat, Owner, Toy, Achievement
 
 
 # Register your models here.
@@ -13,3 +13,6 @@ class CatAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Cat, CatAdmin)
+admin.site.register(Owner)
+admin.site.register(Toy)
+admin.site.register(Achievement)
